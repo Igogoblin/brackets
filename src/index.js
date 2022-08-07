@@ -15,20 +15,71 @@ module.exports = function check(str, bracketsConfig) {
   //   // if()
   // }
   // return true;
-  let stack = [];
+  // let stack = [];
+  // let OPEN_BRACKETS = [];
+  // for (let i = 0; i < bracketsConfig.length; i++) {
+  //   OPEN_BRACKETS.push(bracketsConfig[i][0]);
+  //   console.log(bracketsConfig[i][0]);
+  // }
+
+  // for (let i = 0; i < str.length; i++) {
+  //   let currentSymbol = str[i];
+
+  //   if (OPEN_BRACKETS.includes(currentSymbol)) {
+  //     stack.push(currentSymbol);
+  //   } else {
+  //     if (stack.length === 0) {
+  //       return false;
+  //     }
+  //   }
+  // }
+  // return stack.length === 0;
+  // if (matrix == undefined) {
+  //   return [];
+  // }
+  // let towelSortArr = [];
+  
+  // for ( let i = 0; i < matrix.length; i++)
+  // if (i % 2 === 0) {
+  //  for( let j = 0; j < matrix[i].length; j++){
+  //   towelSortArr.push( matrix[i][j]);
+  //  }}
+  //  else {
+  //   for (let j = (matrix[i].length - 1); j >= 0; j--) {
+  //     towelSortArr.push(matrix[i][j]);
+  //   }
+  // }
+  // return towelSortArr;
+
   let OPEN_BRACKETS = [];
+  let BRACKETS_PAIR = {};
+ 
   for (let i = 0; i < bracketsConfig.length; i++) {
     OPEN_BRACKETS.push(bracketsConfig[i][0]);
-    console.log(bracketsConfig[i][0]);
+    BRACKETS_PAIR[bracketsConfig[i][1]] = bracketsConfig[i][0];
   }
-
-  for (let i = 0; i < str.length; i++) {
+  let stack = [];
+ 
+  for(let i = 0; i < str.length; i++) {
     let currentSymbol = str[i];
 
     if (OPEN_BRACKETS.includes(currentSymbol)) {
-      stack.push(currentSymbol);
-    } else {
+      if ((stack[stack.length - 1] === currentSymbol) && (BRACKETS_PAIR[currentSymbol] === currentSymbol)) {
+        stack.pop();
+      }
+    else {
+      stack.push(currentSymbol)
+    }
+   }
+    else {
       if (stack.length === 0) {
+        return  false;
+      }
+      let topElement = stack[stack.length - 1];
+
+      if (BRACKETS_PAIR[currentSymbol] === topElement) {
+        stack.pop();
+      } else {
         return false;
       }
     }
