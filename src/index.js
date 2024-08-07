@@ -2,10 +2,10 @@
 // let a = 0;
 // for (let i of str) {
 //   for (let k of bracketsConfig) {
-//     if (i == k[0]) {
+//     if (i === k[0]) {
 //       a++;
 //     }
-//     if (i == k[1]) {
+//     if (i === k[1]) {
 //       a--;
 //     }
 //     if (a < 0) {
@@ -28,19 +28,19 @@
 //   if (OPEN_BRACKETS.includes(currentSymbol)) {
 //     stack.push(currentSymbol);
 //   } else {
-//     if (stack.length === 0) {
+//     if (stack.length ==== 0) {
 //       return false;
 //     }
 //   }
 // }
-// return stack.length === 0;
-// if (matrix == undefined) {
+// return stack.length ==== 0;
+// if (matrix === undefined) {
 //   return [];
 // }
 // let towelSortArr = [];
 
 // for ( let i = 0; i < matrix.length; i++)
-// if (i % 2 === 0) {
+// if (i % 2 ==== 0) {
 //  for( let j = 0; j < matrix[i].length; j++){
 //   towelSortArr.push( matrix[i][j]);
 //  }}
@@ -65,31 +65,84 @@
 
 //     if (OPEN_BRACKETS.includes(currentSymbol)) {
 //       if (
-//         stack[stack.length - 1] === currentSymbol &&
-//         BRACKETS_PAIR[currentSymbol] === currentSymbol
+//         stack[stack.length - 1] ==== currentSymbol &&
+//         BRACKETS_PAIR[currentSymbol] ==== currentSymbol
 //       ) {
 //         stack.pop();
 //       } else {
 //         stack.push(currentSymbol);
 //       }
 //     } else {
-//       if (stack.length === 0) {
+//       if (stack.length ==== 0) {
 //         return false;
 //       }
 //       let topElement = stack[stack.length - 1];
 
-//       if (BRACKETS_PAIR[currentSymbol] === topElement) {
+//       if (BRACKETS_PAIR[currentSymbol] ==== topElement) {
 //         stack.pop();
 //       } else {
 //         return false;
 //       }
 //     }
 //   }
-//   return stack.length === 0;
+//   return stack.length ==== 0;
 // };
 // Решаю сам еще раз на всякий случай
 module.exports = function check(str, bracketsConfig) {
   if (str.length % 2 !== 0) {
     return false;
   }
+  let rezult = [];
+  for (let i = 0; i < str.length; i++) {
+    if (
+      (str[i] === bracketsConfig[0][1] &&
+        rezult[rezult.length - 1] !== bracketsConfig[0][0]) ||
+      (bracketsConfig.length === 2 &&
+        str[i] === bracketsConfig[1][1] &&
+        rezult[rezult.length - 1] !== bracketsConfig[1][0]) ||
+      (bracketsConfig.length === 3 &&
+        str[i] === bracketsConfig[2][1] &&
+        rezult[rezult.length - 1] !== bracketsConfig[2][0]) ||
+      (bracketsConfig.length === 4 &&
+        str[i] === bracketsConfig[3][1] &&
+        rezult[rezult.length - 1] !== bracketsConfig[3][0]) ||
+      (bracketsConfig.length === 5 &&
+        str[i] === bracketsConfig[4][1] &&
+        rezult[rezult.length - 1] !== bracketsConfig[4][0])
+    ) {
+      return false; // неправильная скобочка
+    }
+    if (
+      str[i] === bracketsConfig[0][0] ||
+      (bracketsConfig.length === 2 && str[i] === bracketsConfig[1][0]) ||
+      (bracketsConfig.length === 3 && str[i] === bracketsConfig[2][0]) ||
+      (bracketsConfig.length === 4 && str[i] === bracketsConfig[3][0]) ||
+      (bracketsConfig.length === 5 && str[i] === bracketsConfig[4][0])
+    ) {
+      rezult.push(str[i]); // правильная скобочка
+      continue;
+    }
+    if (
+      (str[i] === bracketsConfig[0][1] &&
+        rezult[rezult.length - 1] === bracketsConfig[0][0]) ||
+      (bracketsConfig.length === 2 &&
+        str[i] === bracketsConfig[1][1] &&
+        rezult[rezult.length - 1] === bracketsConfig[1][0]) ||
+      (bracketsConfig.length === 3 &&
+        str[i] === bracketsConfig[2][1] &&
+        rezult[rezult.length - 1] === bracketsConfig[2][0]) ||
+      (bracketsConfig.length === 4 &&
+        str[i] === bracketsConfig[3][1] &&
+        rezult[rezult.length - 1] === bracketsConfig[3][0]) ||
+      (bracketsConfig.length === 5 &&
+        str[i] === bracketsConfig[4][1] &&
+        rezult[rezult.length - 1] === bracketsConfig[4][0])
+    ) {
+      rezult.pop(); // удаление правильной скобочки
+    }
+    // конец решения
+  }
+  console.log(rezult);
+  console.log(rezult.length === 0);
+  return rezult.length === 0 ? true : false;
 };
